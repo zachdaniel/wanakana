@@ -1,5 +1,5 @@
 defmodule Wanakana.Constants do
-  def default_opts(), do: %{}
+  def default_opts(), do: %{imemode: false, use_obsolete_kana: false}
 
   def cjk_symbols_punctuation, do: [0x3000, 0x303F]
   def katakana_punctuation, do: [0x30FB, 0x30FC]
@@ -96,6 +96,10 @@ defmodule Wanakana.Constants do
       'e' => 'え',
       'o' => 'う'
     }
+  end
+
+  def obsolete_kana() do
+    %{"wi" => "ゐ", "we" => "ゑ"}
   end
 
   def from_romaji() do

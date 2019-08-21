@@ -38,6 +38,14 @@ defmodule Wanakana.Utils do
     |> Enum.all?(&is_char_katakana?/1)
   end
 
+  def is_hiragana?(""), do: false
+
+  def is_hiragana?(string) do
+    string
+    |> String.to_charlist()
+    |> Enum.all?(&is_char_hiragana?/1)
+  end
+
   def is_char_slash_dot?(@kana_slash_dot), do: true
   def is_char_slash_dot?(_), do: false
 
@@ -46,7 +54,7 @@ defmodule Wanakana.Utils do
       do: true
   end
 
-  def is_char_japanese?(char), do: false
+  def is_char_japanese?(_char), do: false
 
   # is_char_japanese_punctiation?(input) -> "japanese_punctuation"
   def is_char_katakana?(char) do
