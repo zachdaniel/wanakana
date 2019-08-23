@@ -1,11 +1,8 @@
 # Wanakana
 
-**TODO: Add description**
+A port of the wanakana.js library.
 
 ## Installation
-
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `wanakana` to your list of dependencies in `mix.exs`:
 
 ```elixir
 def deps do
