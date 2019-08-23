@@ -8,8 +8,39 @@ defmodule Wanakana.MixProject do
       app: :wanakana,
       version: @version,
       elixir: "~> 1.9",
+      description: description(),
+      package: package(),
+      name: "Wanakana",
+      docs: docs(),
+      source_url: "https://github.com:zachdaniel/wanakana",
       start_permanent: Mix.env() == :prod,
       deps: deps()
+    ]
+  end
+
+  defp description do
+    """
+    A library for converting to and from romaji, ひらがな, and カタカナ.
+    """
+  end
+
+  defp package() do
+    [
+      name: :wanakana,
+      maintainers: ["Zachary Daniel"],
+      licenses: ["GNU GENERAL PUBLIC LICENSE"],
+      links: %{
+        "GitHub" => "https://github.com:zachdaniel/wanakana"
+      }
+    ]
+  end
+
+  defp docs do
+    [
+      main: "readme",
+      extras: [
+        "README.md"
+      ]
     ]
   end
 
