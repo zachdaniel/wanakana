@@ -54,7 +54,8 @@ defmodule Wanakana.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:git_ops, "~> 0.6.3", only: [:dev]}
+      {:git_ops, "~> 0.6.3", only: [:dev], runtime: false},
+      {:ex_doc, "~> 0.21", only: :dev, runtime: false}
     ]
   end
 end
