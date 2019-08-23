@@ -12,6 +12,8 @@ defmodule Wanakana.Tokenize do
 
   Does not split into parts of speech!
 
+  The js version of this is more sophisticated, but I'll add that if someone needs it.
+
   Examples:
 
       iex> Wanakana.Tokenize.tokenize("")

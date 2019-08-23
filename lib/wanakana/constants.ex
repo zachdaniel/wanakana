@@ -1,5 +1,6 @@
 defmodule Wanakana.Constants do
-  def default_opts(), do: %{imemode: false, use_obsolete_kana: false}
+  def default_opts(),
+    do: %{imemode: false, use_obsolete_kana: false, pass_romaji: false, upcase_katakana: false}
 
   def cjk_symbols_punctuation, do: [0x3000, 0x303F]
   def katakana_punctuation, do: [0x30FB, 0x30FC]

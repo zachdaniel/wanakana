@@ -1,27 +1,50 @@
-defmodule Wanakana.KatakanaToHiragana do
+defmodule Wanakana.ToHiragana do
   import Wanakana.Utils,
     only: [
       is_char_katakana?: 1,
       is_char_slash_dot?: 1,
-      is_char_long_dash?: 1
+      is_char_long_dash?: 1,
+      is_romaji?: 1,
+      is_mixed?: 1
     ]
 
-  alias Wanakana.Constants
+  alias Wanakana.{Constants, RomajiToKana}
 
   @to_romaji Constants.to_romaji()
   @long_vowels Constants.long_vowels()
   @hiragana_start Constants.hiragana_start()
   @katakana_start Constants.katakana_start()
+  @default_opts Constants.default_opts()
 
   @doc """
   Converts katakana to hiragana
 
-      iex> Wanakana.KatakanaToHiragana.katakana_to_hiragana("カタカナ")
+      iex> Wanakana.ToHiragana.to_hiragana("カタカナ")
       "かたかな"
-      iex> Wanakana.KatakanaToHiragana.katakana_to_hiragana("オー")
+      iex> Wanakana.ToHiragana.to_hiragana("オー")
       "おう"
   """
-  def katakana_to_hiragana(katakana) do
+  def to_hiragana(katakana, opts \\ %{}) do
+    opts = Map.merge(@default_opts, opts)
+
+    cond do
+      Map.get(opts, :pass_romaji) ->
+        do_to_hiragana(katakana)
+
+      is_romaji?(katakana) ->
+        RomajiToKana.romaji_to_kana(katakana, opts)
+
+      is_mixed?(katakana) ->
+        katakana
+        |> do_to_hiragana()
+        |> RomajiToKana.romaji_to_kana(opts)
+
+      true ->
+        do_to_hiragana(katakana)
+    end
+  end
+
+  defp do_to_hiragana(katakana) do
     katakana
     |> String.to_charlist()
     |> Enum.with_index()

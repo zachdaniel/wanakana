@@ -1,4 +1,4 @@
-defmodule Wanakana.Test.HiraganaToKatakanaTest do
+defmodule Wanakana.Test.ToKatakanaTest do
   use ExUnit.Case
-  doctest Wanakana.HiraganaToKatakana
+  doctest Wanakana.ToKatakana
 end

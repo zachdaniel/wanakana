@@ -10,6 +10,7 @@ defmodule Wanakana.Utils do
   @ja_punctuation_ranges Constants.ja_punctuation_ranges()
   @en_punctuation_ranges Constants.en_punctuation_ranges()
   @japanese_ranges Constants.japanese_ranges()
+  @romaji_ranges Constants.romaji_ranges()
   @kana_slash_dot Constants.kana_slash_dot()
 
   @prolonged_sound_mark Constants.prolonged_sound_mark()
@@ -46,6 +47,31 @@ defmodule Wanakana.Utils do
     |> Enum.all?(&is_char_hiragana?/1)
   end
 
+  def is_romaji?(""), do: false
+
+  def is_romaji?(string) do
+    string
+    |> String.to_charlist()
+    |> Enum.all?(&is_char_romaji?/1)
+  end
+
+  def is_mixed?(string, pass_kanji? \\ true)
+  def is_mixed?("", _), do: false
+
+  def is_mixed?(string, pass_kanji?) do
+    charlist = String.to_charlist(string)
+
+    has_kanji? =
+      if pass_kanji? do
+        false
+      else
+        Enum.any?(charlist, &is_char_kanji?/1)
+      end
+
+    (Enum.any?(charlist, &is_char_hiragana?/1) || Enum.any?(charlist, &is_char_katakana?/1)) &&
+      Enum.any?(charlist, &is_char_romaji?/1) && !has_kanji?
+  end
+
   def is_char_slash_dot?(@kana_slash_dot), do: true
   def is_char_slash_dot?(_), do: false
 
@@ -60,6 +86,12 @@ defmodule Wanakana.Utils do
   def is_char_katakana?(char) do
     is_char_in_range?(char, @katakana_start, @katakana_end)
   end
+
+  for [start, end_range] <- @romaji_ranges do
+    def is_char_romaji?(char) when char >= unquote(start) and char <= unquote(end_range), do: true
+  end
+
+  def is_char_romaji?(_), do: false
 
   def is_char_hiragana?(char) do
     is_char_long_dash?(char) || is_char_in_range?(char, @hiragana_start, @hiragana_end)

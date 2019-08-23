@@ -5,7 +5,7 @@ defmodule Wanakana.ToRomaji do
     ]
 
   alias Wanakana.Constants
-  alias Wanakana.KatakanaToHiragana
+  alias Wanakana.ToHiragana
 
   @default_opts Constants.default_opts()
   @to_romaji Constants.to_romaji()
@@ -18,7 +18,8 @@ defmodule Wanakana.ToRomaji do
       iex> Wanakana.ToRomaji.to_romaji("ひらがな　カタカナ", %{upcase_katakana: true})
       "hiragana KATAKANA"
   """
-  def to_romaji(string, opts \\ @default_opts) do
+  def to_romaji(string, opts \\ %{}) do
+    opts = Map.merge(@default_opts, opts)
     do_to_romaji(string, opts)
   end
 
@@ -35,7 +36,7 @@ defmodule Wanakana.ToRomaji do
 
     {uppercase?, letter} =
       if is_katakana?(letter) do
-        {true, KatakanaToHiragana.katakana_to_hiragana(letter)}
+        {true, ToHiragana.to_hiragana(letter)}
       else
         {false, letter}
       end

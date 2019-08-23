@@ -7,7 +7,7 @@ defmodule Wanakana.RomajiToKana do
   #   ]
 
   alias Wanakana.Constants
-  alias Wanakana.HiraganaToKatakana
+  alias Wanakana.ToKatakana
 
   # @four_char_edge_cases Constants.four_char_edge_cases()
   @default_opts Constants.default_opts()
@@ -156,7 +156,7 @@ defmodule Wanakana.RomajiToKana do
 
   defp maybe_upcase(kana, first_letter)
        when first_letter > @uppercase_start and first_letter < @uppercase_end do
-    HiraganaToKatakana.hiragana_to_katakana(kana)
+    ToKatakana.to_katakana(kana)
   end
 
   defp maybe_upcase(kana, _), do: kana
