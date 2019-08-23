@@ -30,7 +30,7 @@ defmodule Wanakana.MixProject do
       maintainers: ["Zachary Daniel"],
       licenses: ["GNU GENERAL PUBLIC LICENSE"],
       links: %{
-        "GitHub" => "https://github.com:zachdaniel/wanakana"
+        "GitHub" => "https://github.com/zachdaniel/wanakana"
       }
     ]
   end
