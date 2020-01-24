@@ -71,6 +71,15 @@ defmodule Wanakana.RomajiToKana do
     do_romaji_to_kana(remaining, config, [kana | acc])
   end
 
+  defp get_chunk([first_letter, second_letter] = ending, %{imemode: true})
+       when first_letter in 'nN' and second_letter in 'yY' do
+    {ending, []}
+  end
+
+  defp get_chunk([?n], %{imemode: true}) do
+    {"n", []}
+  end
+
   defp get_chunk([n, 32 | rest], %{imemode: false}) when n in 'nN' do
     {"ん", rest}
   end
@@ -143,11 +152,6 @@ defmodule Wanakana.RomajiToKana do
          when upper_or_lower(first_letter, unquote(romaji_first_letter)) do
       {maybe_upcase(unquote(kana), first_letter), rest}
     end
-  end
-
-  defp get_chunk([first_letter, second_letter] = ending, %{imemode: true})
-       when first_letter in 'nN' and second_letter in 'yY' do
-    {ending, ""}
   end
 
   defp get_chunk([letter | rest], _) do
